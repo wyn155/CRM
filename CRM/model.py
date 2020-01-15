@@ -19,7 +19,7 @@ class Crm_cautions(db.Model):
 
 class Customer(db.Model):
     __tablename__ = "customer"
-    __table_args__ = {"extend_existing":True}  # 如果表已经被创建过,需要加这个参数提供扩展
-    access_time = db.Column(db.TIMESTAMP, primary_key=False)
-
+    customer_code = db.Column(db.Integer,primary_key=True)
+    customer_name = db.Column(db.Text)
+    customer_shortname = db.Column(db.Text)
 
