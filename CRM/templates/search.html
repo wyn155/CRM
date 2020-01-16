@@ -6,10 +6,58 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>客户查询</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/search.css')}}">
+<!--    <link rel="stylesheet" href="/static/css/search.css">-->
+    <script src="{{ url_for('static',filename='js/jquery-3.4.1.min.js')}}"></script>
+<!--    <script src="/static/js/jquery-3.4.1.min.js"></script>-->
 </head>
 <body>
-    <div>
-        123
+    <div class="search-box">
+        <p>客户查询：</p>
+        <form action="javascript:" method="get">
+            <div>
+                <label for="" class="search_name">客户编码：</label>
+                <input type="number" name="customer_code" value="">
+            </div>
+            <div>
+                <label for="" class="search_name">客户名称：</label>
+                <input type="text" name="customer_name" value="">
+
+            </div>
+            <input type="submit" value="查询">
+        </form>
+        <table class="table">
+            <tr>
+                <th>客户编码</th>
+                <th>客户名称</th>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
+<script>
+    $("[type=submit]").click(function(){
+
+        $.ajax({
+            url:"/api/customer",
+            type:"get",
+            data:{
+                customer_code:$("[name=customer_code]").val(),
+                customer_name:$("[name=customer_name]").val()
+            },
+            success:function(en){
+                if(en.data){
+
+                     $(`
+                        <tr>
+                            <td>${en.data[0].customer_code}</td>
+                            <td>${en.data[0].customer_name}</td>
+                        </tr>
+                    `).appendTo($("table tbody"))
+                }
+
+
+            }
+        })
+    })
+</script>
